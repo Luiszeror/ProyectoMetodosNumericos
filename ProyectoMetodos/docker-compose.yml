@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  biseccion:
+    build:
+      context: .
+      dockerfile: Dockerfile.biseccion  
+    ports:
+      - "5000:5000"  
+    environment:
+      - SERVICE_NAME=biseccion
+
+  punto_fijo:
+    build:
+      context: .
+      dockerfile: Dockerfile.punto_fijo  
+    ports:
+      - "5001:5000"  
+    environment:
+      - SERVICE_NAME=punto_fijo
+
+  newton:
+    build:
+      context: .
+      dockerfile: Dockerfile.newton  
+    ports:
+      - "5002:5000"  
+    environment:
+      - SERVICE_NAME=newton
+
+  secante: 
+    build:
+      context: .
+      dockerfile: Dockerfile.secante  
+    ports:
+      - "5003:5000"
+    environment:
+      - SERVICE_NAME=secante
+
+
+  jacobi: 
+    build:
+      context: .
+      dockerfile: Dockerfile.jacobi  
+    ports:
+      - "5005:5000"  
+    environment:
+      - SERVICE_NAME=jacobi
+
+      
+  trapecio: 
+    build:
+      context: .
+      dockerfile: Dockerfile.trapecio  
+    ports:
+      - "5007:5000"  
+    environment:
+      - SERVICE_NAME=trapecio
+
+  gauss: 
+    build:
+      context: .
+      dockerfile: Dockerfile.gauss  
+    ports:
+      - "5006:5000"  
+    environment:
+      - SERVICE_NAME=gauss   
+
+  simpson: 
+    build:
+      context: .
+      dockerfile: Dockerfile.simpson 
+    ports:
+      - "5008:5000"  
+    environment:
+      - SERVICE_NAME=simpson     
+    
+  broyden: 
+    build:
+      context: .
+      dockerfile: Dockerfile.broyden 
+    ports:
+      - "5009:5000"  
+    environment:
+      - SERVICE_NAME=broyden  

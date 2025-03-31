@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Métodos Numéricos</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            margin-top: 50px;
+        }
+        table {
+            margin: 0 auto;
+        }
+        td {
+            padding: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        #display {
+            font-size: 20px;
+            text-align: right;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .bisection-container,
+        .point-container,
+        .newton-container,
+        .secante-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center">Calculadora de Métodos Numéricos</h1>
+
+        <!-- Campo de entrada de la función y selección de método -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="display">f(x):</label>
+                    <!-- <input type="text" class="form-control" id="display" readonly /> -->
+                    <input type="text" class="form-control" id="display">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="method">Método:</label>
+                    <select id="method" class="form-control" onchange="toggleFields()">
+                        <option value="" disabled selected>Selecciona un método</option>
+                        <option value="biseccion">Bisección</option>
+                        <option value="puntoFijo">Punto Fijo</option>    
+                        <option value="newton">Newton Raphson</option>    
+                        <option value="secante">Secante</option>
+                        <option value="broyden">Broyden</option>
+                        <option value="jacobi">Jacobi</option>
+                        <option value="trapecio">Trapecio</option>
+                        <option value="gauss">Gauss-Seidel</option>
+                        <option value="simpson">Regla de simpson</option>
+                                       
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de botones -->
+        <table class="table table-bordered">
+            <tr>
+                <td onclick="addToDisplay('sin')">sin</td>
+                <td onclick="addToDisplay('1')">1</td>
+                <td onclick="addToDisplay('2')">2</td>
+                <td onclick="addToDisplay('3')">3</td>
+                <td onclick="addToDisplay('/')">/</td>
+                <td onclick="addToDisplay('(')">(</td>
+                <td onclick="clearDisplay()">C</td>
+            </tr>
+            <tr>
+                <td onclick="addToDisplay('cos')">cos</td>
+                <td onclick="addToDisplay('4')">4</td>
+                <td onclick="addToDisplay('5')">5</td>
+                <td onclick="addToDisplay('6')">6</td>
+                <td onclick="addToDisplay('*')">*</td>
+                <td onclick="addToDisplay(')')">)</td>
+                <td onclick="deleteLastChar()">⌫</td>
+            </tr>
+            <tr>
+                <td onclick="addToDisplay('tan')">tan</td>
+                <td onclick="addToDisplay('7')">7</td>
+                <td onclick="addToDisplay('8')">8</td>
+                <td onclick="addToDisplay('9')">9</td>
+                <td onclick="addToDisplay('-')">-</td>
+                <td onclick="addToDisplay('**')">^</td>
+                <td rowspan="2" onclick="addToDisplay('+')">+</td>
+            </tr>
+            <tr>
+                <td onclick="addToDisplay('E')">e</td>
+                <td colspan="2" onclick="addToDisplay('0')">0</td> 
+                <td onclick="addToDisplay('.')">.</td>
+                <td onclick="addToDisplay('x')">x</td>
+                <td onclick="addToDisplay('sqrt')">√</td>
+            </tr>
+        </table>
+
+        <!-- Campos especificos segun el métodos seleccionado-->
+        <div id="bisectionFields" class="bisection-container form-group">
+            <label for="xi">Valor de xi:</label>
+            <input type="number" class="form-control" id="xi" name="xi" step="any" required>
+            <br>
+            <label for="xu">Valor de xu:</label>
+            <input type="number" class="form-control" id="xu" name="xu" step="any" required>
+        </div>
+
+        <div id="fixedPointFields" class="point-container form-group">
+            <button id="acceptFunction" class="btn btn-primary">Aceptar función</button>
+            <br><br>
+            <label for="transformada">Transformada de la función:</label>
+            <input type="text" class="form-control" id="transformada" name="transformada" readonly required>
+            <br>
+            <label for="xo">Valor del punto inicial (xo):</label>
+            <input type="number" class="form-control" id="xo" name="xo" step="any" required>
+        </div>
+
+        <div id="newtonFields" class="newton-container form-group">
+            <label for="xo_newton">Valor del punto inicial (xo):</label>
+            <input type="number" class="form-control" id="xo_newton" name="xo" step="any" required>
+        </div>
+
+        <div id="secanteFields" class="secante-container form-group">
+            <label for="x0_sec">Valor de x0:</label>
+            <input type="number" class="form-control" id="x0_sec" name="x0_sec" step="any" required>
+            <br>
+            <label for="x1_sec">Valor de x1:</label>
+            <input type="number" class="form-control" id="x1_sec" name="x1_sec" step="any" required>
+        </div>
+
+        <div id="jacobiFields" class="jacobi-container form-group">
+            <label for="nVar_jac">Número de variables:</label>
+            <input type="number" class="form-control" id="nVar_jac" name="nVar_jac" min="0" onkeydown="return false" required>
+            <br>
+            <label for="matriz_jac">Ingrese la matriz:</label>
+            <textarea class="form-control" id="matriz_jac" rows="4" required></textarea>
+            <br>
+            <label for="jacobiDisplay">Solución:</label>
+            <textarea class="form-control" id="jacobiDisplay" rows="4" readonly></textarea>
+        </div>
+
+
+        <div id="gaussFields" class="gauss-container form-group">
+            <label for="nVar_gau">Número de variables:</label>
+            <input type="number" class="form-control" id="nVar_gau" name="nVar_gau" min="0" onkeydown="return false" required>
+            <br>
+            <label for="matriz_gau">Ingrese la matriz:</label>
+            <textarea class="form-control" id="matriz_gau" rows="4" required></textarea>
+            <br>
+            <label for="gaussDisplay">Solución:</label>
+            <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
+        </div>
+
+        <div id="broydenFields" class="broyden-container form-group">
+            <label for="nVar_bro">Número de variables:</label>
+            <input type="number" class="form-control" id="nVar_bro" name="nVar_bro" min="0" onkeydown="return false" required>
+            <br>
+            <label for="matriz_bro">Ingrese la matriz:</label>
+            <textarea class="form-control" id="matriz_bro" rows="4" required></textarea>
+            <br>
+            <label for="broydenDisplay">Solución:</label>
+            <textarea class="form-control" id="broydenDisplay" rows="4" readonly></textarea>
+        </div>
+
+
+        <div id="trapecioFields" class="trapecio-container form-group">
+            <label for="a_trap">Valor de a:</label>
+            <input type="number" class="form-control" id="a_trap" name="a_trap" step="any" required>
+            <br>
+            <label for="b_trap">Valor de b:</label>
+            <input type="number" class="form-control" id="b_trap" name="b_trap" step="any" required>
+            <br>
+            <label for="num_trap">Número de trapecios:</label>
+            <input type="number" class="form-control" id="num_trap" name="num_trap" min="0" step="any" required>
+            <br>
+        </div>
+
+
+        <div id="simpsonFields" class="simpson-container form-group">
+            <label for="a_simp">Valor de a:</label>
+            <input type="number" class="form-control" id="a_simp" name="a_simp" step="any" required>
+            <br>
+            <label for="b_simp">Valor de b:</label>
+            <input type="number" class="form-control" id="b_simp" name="b_simp" step="any" required>
+            <br>
+            <label for="num_simp">Número de trapecios:</label>
+            <input type="number" class="form-control" id="num_simp" name="num_simp" min="0" step="any" required>
+            <br>
+        </div>
+
+
+        <!-- fin campos -->
+
+
+
+       <!-- Botones centrados -->
+<div class="text-center mt-4">
+    <button id="sendData" class="btn btn-success mx-2">Enviar Datos</button>
+    <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+</div>
+
+<!-- Gráfica centrada -->
+<div id="graphContainer" class="mt-5 text-center">
+    <h3>Resultado</h3>
+    <div id="graphDiv" style="width:100%;height:100%;"></div>
+</div>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Bootstrap.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Cargar el archivo JavaScript -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
