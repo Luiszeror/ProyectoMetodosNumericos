@@ -64,16 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case '5006':
                 methodSelect.value = 'gauss';
-                break;       
-            case '5007':
-                methodSelect.value = 'trapecio';
                 break;
-            case '5008':
-                methodSelect.value = 'simpson';
-                break;
-            case '5009':
-                methodSelect.value = 'broyden';
-                break;         
             default:
                 methodSelect.value = '';  // Ninguno seleccionado
                 break;
@@ -92,14 +83,8 @@ function toggleFields() {
     const fixedPointFields = document.getElementById('fixedPointFields');
     const newtonFields = document.getElementById('newtonFields');
     const secanteFields = document.getElementById('secanteFields');
-
     const jacobiFields = document.getElementById('jacobiFields');
     const gaussFields = document.getElementById('gaussFields');
-    const trapecioFields = document.getElementById('trapecioFields');
-    const simpsonFields = document.getElementById('simpsonFields');
-    const broydenFields = document.getElementById('broydenFields');
-
-
 
 
     switchDisplayTransf = false;
@@ -115,10 +100,7 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5000;
             break;
         case 'puntoFijo':
@@ -127,10 +109,7 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5001;
             break;
         case 'newton':
@@ -139,10 +118,7 @@ function toggleFields() {
             fixedPointFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5002;
             break;
         case 'secante':
@@ -151,10 +127,7 @@ function toggleFields() {
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5003;
             break;
         case 'jacobi':
@@ -163,10 +136,7 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5005;
             break;
         case 'gauss':
@@ -176,59 +146,8 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
-            broydenFields.style.display = 'none';
             newPort = 5006;
-            break;        
-        case 'trapecio':
-            trapecioFields.style.display = 'block';
-            jacobiFields.style.display = 'none';
-            secanteFields.style.display = 'none';
-            newtonFields.style.display = 'none';
-            bisectionFields.style.display = 'none';
-            fixedPointFields.style.display = 'none';
-            gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
-            broydenFields.style.display = 'none';
-            newPort = 5007;
             break;
-         case 'trapecio':
-            trapecioFields.style.display = 'block';
-            jacobiFields.style.display = 'none';
-            secanteFields.style.display = 'none';
-            newtonFields.style.display = 'none';
-            bisectionFields.style.display = 'none';
-            fixedPointFields.style.display = 'none';
-            gaussFields.style.display = 'none';
-            simpsonFields.style.display = 'none';
-            broydenFields.style.display = 'none';
-            newPort = 5007;
-            break;
-        case 'simpson':
-            simpsonFields.style.display = 'block';
-            trapecioFields.style.display = 'none';
-            jacobiFields.style.display = 'none';
-            secanteFields.style.display = 'none';
-            newtonFields.style.display = 'none';
-            bisectionFields.style.display = 'none';
-            fixedPointFields.style.display = 'none';
-            gaussFields.style.display = 'none';
-            broydenFields.style.display = 'none';
-            newPort = 5008;
-            break;   
-        case 'broyden':
-            simpsonFields.style.display = 'none';
-            trapecioFields.style.display = 'none';
-            jacobiFields.style.display = 'none';
-            secanteFields.style.display = 'none';
-            newtonFields.style.display = 'none';
-            bisectionFields.style.display = 'none';
-            fixedPointFields.style.display = 'none';
-            gaussFields.style.display = 'none';
-            broydenFields.style.display = 'block';
-            newPort = 5009;
-            break;                 
         default:
             break;
     }
@@ -314,41 +233,6 @@ document.getElementById('sendData').addEventListener('click', function(event) {
         method_no_graphic = true
     }
 
-    if (selectedMethod === 'broyden') {
-        apiUrl = '/api/broyden';
-        const nVar = document.getElementById('nVar_bro').value;
-        const matriz = document.getElementById('matriz_bro').value;
-        dataToSend.nVar_bro = parseFloat(nVar);
-        dataToSend.matriz_bro = matriz;  
-
-        method_no_graphic = true
-    }
-
-
-    // Incluye a, b, número de trapecios si el método es 'trapecio'
-    if (selectedMethod === 'trapecio') {
-        apiUrl = '/api/trapecio';
-        const a = document.getElementById('a_trap').value;
-        const b = document.getElementById('b_trap').value;
-        const num = document.getElementById('num_trap').value;
-
-        dataToSend.a_trap = parseFloat(a);
-        dataToSend.b_trap = parseFloat(b);
-        dataToSend.num_trap = parseInt(num);
-    }
-
-    if (selectedMethod === 'simpson') {
-        apiUrl = '/api/simpson';
-        const a = document.getElementById('a_simp').value;
-        const b = document.getElementById('b_simp').value;
-        const num = document.getElementById('num_simp').value;
-
-        dataToSend.a_simp = parseFloat(a);
-        dataToSend.b_simp = parseFloat(b);
-        dataToSend.num_simp = parseInt(num);
-    }
-
-
 
     // Enviar datos al servidor usando Fetch API
     fetch(apiUrl, {
@@ -383,13 +267,6 @@ document.getElementById('sendData').addEventListener('click', function(event) {
                 const gaussDisplay = document.getElementById('gaussDisplay');
                 gaussDisplay.innerText = `Solución Gauss: ${data.solution}`;
             }
-            if (selectedMethod === 'broyden') {
-                const broydenDisplay = document.getElementById('broydenDisplay');
-                broydenDisplay.innerText = `Solución Broyden: ${data.solution}`;
-            }
-
-
-           
         }
         
     })

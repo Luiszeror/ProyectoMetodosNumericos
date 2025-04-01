@@ -46,15 +46,6 @@ services:
     environment:
       - SERVICE_NAME=jacobi
 
-      
-  trapecio: 
-    build:
-      context: .
-      dockerfile: Dockerfile.trapecio  
-    ports:
-      - "5007:5000"  
-    environment:
-      - SERVICE_NAME=trapecio
 
   gauss: 
     build:
@@ -65,20 +56,3 @@ services:
     environment:
       - SERVICE_NAME=gauss   
 
-  simpson: 
-    build:
-      context: .
-      dockerfile: Dockerfile.simpson 
-    ports:
-      - "5008:5000"  
-    environment:
-      - SERVICE_NAME=simpson     
-    
-  broyden: 
-    build:
-      context: .
-      dockerfile: Dockerfile.broyden 
-    ports:
-      - "5009:5000"  
-    environment:
-      - SERVICE_NAME=broyden  

@@ -51,7 +51,6 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="display">f(x):</label>
-                    <!-- <input type="text" class="form-control" id="display" readonly /> -->
                     <input type="text" class="form-control" id="display">
                 </div>
             </div>
@@ -64,12 +63,8 @@
                         <option value="puntoFijo">Punto Fijo</option>    
                         <option value="newton">Newton Raphson</option>    
                         <option value="secante">Secante</option>
-                        <option value="broyden">Broyden</option>
                         <option value="jacobi">Jacobi</option>
-                        <option value="trapecio">Trapecio</option>
                         <option value="gauss">Gauss-Seidel</option>
-                        <option value="simpson">Regla de simpson</option>
-                                       
                     </select>
                 </div>
             </div>
@@ -168,42 +163,6 @@
             <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
         </div>
 
-        <div id="broydenFields" class="broyden-container form-group">
-            <label for="nVar_bro">Número de variables:</label>
-            <input type="number" class="form-control" id="nVar_bro" name="nVar_bro" min="0" onkeydown="return false" required>
-            <br>
-            <label for="matriz_bro">Ingrese la matriz:</label>
-            <textarea class="form-control" id="matriz_bro" rows="4" required></textarea>
-            <br>
-            <label for="broydenDisplay">Solución:</label>
-            <textarea class="form-control" id="broydenDisplay" rows="4" readonly></textarea>
-        </div>
-
-
-        <div id="trapecioFields" class="trapecio-container form-group">
-            <label for="a_trap">Valor de a:</label>
-            <input type="number" class="form-control" id="a_trap" name="a_trap" step="any" required>
-            <br>
-            <label for="b_trap">Valor de b:</label>
-            <input type="number" class="form-control" id="b_trap" name="b_trap" step="any" required>
-            <br>
-            <label for="num_trap">Número de trapecios:</label>
-            <input type="number" class="form-control" id="num_trap" name="num_trap" min="0" step="any" required>
-            <br>
-        </div>
-
-
-        <div id="simpsonFields" class="simpson-container form-group">
-            <label for="a_simp">Valor de a:</label>
-            <input type="number" class="form-control" id="a_simp" name="a_simp" step="any" required>
-            <br>
-            <label for="b_simp">Valor de b:</label>
-            <input type="number" class="form-control" id="b_simp" name="b_simp" step="any" required>
-            <br>
-            <label for="num_simp">Número de trapecios:</label>
-            <input type="number" class="form-control" id="num_simp" name="num_simp" min="0" step="any" required>
-            <br>
-        </div>
 
 
         <!-- fin campos -->
@@ -230,9 +189,10 @@
     <!-- Bootstrap.js -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
 
     <!-- Cargar el archivo JavaScript -->
     <script src="{{ url_for('static', filename='app.js') }}"></script>
+
 </body>
 </html>
