@@ -101,10 +101,10 @@ function toggleFields() {
 
 
 
-    //inicialización variables booleanas
+
     switchDisplayTransf = false;
     method_no_graphic = false; 
-    //
+
 
     let newPort;  // Definir puerto específico según el método seleccionado
 
