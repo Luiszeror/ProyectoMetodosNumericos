@@ -1,5 +1,5 @@
 body {
-    background-color: #1e1e2f; /* Fondo oscuro azulado */
+    background-color: #585886; /* Fondo oscuro azulado */
     margin-top: 50px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -38,7 +38,7 @@ textarea:focus {
     cursor: pointer;
     font-size: 18px;
     text-align: center;
-    border: 1px solid #dee2e6;
+    border: 2px solid #000000;
     background-color: #ffffff;
     transition: background-color 0.3s;
 }
