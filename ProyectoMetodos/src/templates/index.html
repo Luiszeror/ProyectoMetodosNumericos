@@ -6,10 +6,10 @@
     <title>Calculadora de Métodos Numéricos</title>
 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         body {
             margin-top: 50px;
@@ -60,8 +60,8 @@
                     <select id="method" class="form-control" onchange="toggleFields()">
                         <option value="" disabled selected>Selecciona un método</option>
                         <option value="biseccion">Bisección</option>
-                        <option value="puntoFijo">Punto Fijo</option>    
-                        <option value="newton">Newton Raphson</option>    
+                        <option value="puntoFijo">Punto Fijo</option>
+                        <option value="newton">Newton Raphson</option>
                         <option value="secante">Secante</option>
                         <option value="jacobi">Jacobi</option>
                         <option value="gauss">Gauss-Seidel</option>
@@ -101,7 +101,7 @@
             </tr>
             <tr>
                 <td onclick="addToDisplay('E')">e</td>
-                <td colspan="2" onclick="addToDisplay('0')">0</td> 
+                <td colspan="2" onclick="addToDisplay('0')">0</td>
                 <td onclick="addToDisplay('.')">.</td>
                 <td onclick="addToDisplay('x')">x</td>
                 <td onclick="addToDisplay('sqrt')">√</td>
@@ -188,7 +188,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- Bootstrap.js -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
 
     <!-- Cargar el archivo JavaScript -->
