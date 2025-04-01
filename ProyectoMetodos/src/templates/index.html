@@ -10,6 +10,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
     <style>
         body {
             margin-top: 50px;
@@ -44,19 +48,19 @@
 <body>
 
     <div class="container">
-        <h1 class="text-center">Calculadora de Métodos Numéricos</h1>
+        <h1 class="text-center" style="color: #fff">Calculadora de Métodos Numéricos</h1>
 
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="display">f(x):</label>
+                    <label for="display" style="color: #fff">f(x):</label>
                     <input type="text" class="form-control" id="display">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="method">Método:</label>
+                    <label for="method" style="color: #fff">Método:</label>
                     <select id="method" class="form-control" onchange="toggleFields()">
                         <option value="" disabled selected>Selecciona un método</option>
                         <option value="biseccion">Bisección</option>
