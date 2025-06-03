@@ -1,8 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from sympy import symbols, sympify, lambdify
 from methods.euler import euler_main
 
 app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html') 
 
 @app.route('/api/euler', methods=['POST'])
 def resolver_euler():

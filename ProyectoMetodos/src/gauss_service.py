@@ -2,7 +2,9 @@ from flask import Flask, jsonify, request, render_template
 from methods.gauss import gauss_main
 app = Flask(__name__)
 
-
+@app.route('/')
+def index():
+    return render_template('index.html') 
 
 @app.route('/api/gauss', methods=['POST'])
 def gauss():
