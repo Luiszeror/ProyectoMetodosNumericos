@@ -14,6 +14,10 @@ def resolver_euler():
 
     # Extraer y validar datos del request
     expresion = data.get("expresion")  # f(x, y) como string
+
+    if expresion is None or not isinstance(expresion, str) or expresion.strip() == "":
+        return jsonify({"error": "No se recibió una expresión válida para f(x, y)."}), 400
+
     x0 = float(data.get("x0", 0))
     y0 = float(data.get("y0", 0))
     h = float(data.get("h", 0.1))
@@ -22,6 +26,8 @@ def resolver_euler():
     # Crear función f(x, y) con sympy
     x, y = symbols('x y')
     try:
+        # Reemplazar potencias escritas con ^ por **
+        expresion = expresion.replace("^", "**")
         f_expr = sympify(expresion)
         f_lambda = lambdify((x, y), f_expr, modules=['math'])
     except Exception as e:
