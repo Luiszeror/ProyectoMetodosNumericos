@@ -340,10 +340,10 @@ document.getElementById('sendData').addEventListener('click', function(event) {
 
     if (selectedMethod === 'euler') {
     apiUrl = '/api/euler';
-    const x0 = document.getElementById('x0_euler').value;
-    const y0 = document.getElementById('y0_euler').value;
-    const h = document.getElementById('h_euler').value;
-    const n = document.getElementById('n_euler').value;
+    const x0 = document.getElementById('x0').value;
+    const y0 = document.getElementById('y0').value;
+    const h = document.getElementById('h').value;
+    const n = document.getElementById('n').value;
 
     dataToSend.x0 = parseFloat(x0);
     dataToSend.y0 = parseFloat(y0);
