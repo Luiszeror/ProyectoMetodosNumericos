@@ -380,8 +380,9 @@ document.getElementById('sendData').addEventListener('click', function(event) {
                 if (data.resultado) {
                     eulerDisplay.innerText = JSON.stringify(data.resultado, null, 2);
 
-                    const x_vals = data.resultado.map(p => p[0]);
-                    const y_vals = data.resultado.map(p => p[1]);
+                    const x_vals = data.resultado.x;
+                    const y_vals = data.resultado.y;
+
 
                     const graphDiv = document.getElementById('graphDiv');
                     Plotly.newPlot(graphDiv, [{
