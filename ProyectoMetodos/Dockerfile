@@ -11,6 +11,3 @@ COPY . .
 CMD ["python", "src/main.py"]
 
 
-#podman build -t ima .
-
-#podman run -it -p 5000:5000 ima

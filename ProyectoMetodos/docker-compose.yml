@@ -54,5 +54,35 @@ services:
     ports:
       - "5006:5000"  
     environment:
-      - SERVICE_NAME=gauss   
+      - SERVICE_NAME=gauss
+
+
+  trapecio:
+    build:
+      context: .
+      dockerfile: Dockerfile.trapecio
+    ports:
+      - "5007:5000"
+    environment:
+      - SERVICE_NAME=trapecio
+
+  simpson:
+    build:
+      context: .
+      dockerfile: Dockerfile.simpson
+    ports:
+      - "5008:5000"
+    environment:
+      - SERVICE_NAME=simpson
+
+
+  euler:
+    build:
+      context: .
+      dockerfile: Dockerfile.euler
+    ports:
+      - "5009:5000"
+    environment:
+      - SERVICE_NAME=euler
+
 

@@ -64,7 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case '5006':
                 methodSelect.value = 'gauss';
+                break;       
+            case '5007':
+                methodSelect.value = 'trapecio';
                 break;
+            case '5008':
+                methodSelect.value = 'simpson';
+                break;
+            case '5009':
+                methodSelect.value = 'euler';
+                break;         
             default:
                 methodSelect.value = '';  // Ninguno seleccionado
                 break;
@@ -83,13 +92,19 @@ function toggleFields() {
     const fixedPointFields = document.getElementById('fixedPointFields');
     const newtonFields = document.getElementById('newtonFields');
     const secanteFields = document.getElementById('secanteFields');
+
     const jacobiFields = document.getElementById('jacobiFields');
     const gaussFields = document.getElementById('gaussFields');
+    const trapecioFields = document.getElementById('trapecioFields');
+    const simpsonFields = document.getElementById('simpsonFields');
+    const eulerFields = document.getElementById('eulerFields');
 
 
+
+    //inicialización variables booleanas
     switchDisplayTransf = false;
     method_no_graphic = false; 
-
+    //
 
     let newPort;  // Definir puerto específico según el método seleccionado
 
@@ -100,7 +115,10 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5000;
             break;
         case 'puntoFijo':
@@ -109,7 +127,10 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5001;
             break;
         case 'newton':
@@ -118,7 +139,10 @@ function toggleFields() {
             fixedPointFields.style.display = 'none';
             secanteFields.style.display = 'none';
             gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5002;
             break;
         case 'secante':
@@ -127,7 +151,10 @@ function toggleFields() {
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
             gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
             jacobiFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5003;
             break;
         case 'jacobi':
@@ -136,7 +163,10 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
             gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5005;
             break;
         case 'gauss':
@@ -146,8 +176,59 @@ function toggleFields() {
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
+            eulerFields.style.display = 'none';
             newPort = 5006;
+            break;        
+        case 'trapecio':
+            trapecioFields.style.display = 'block';
+            jacobiFields.style.display = 'none';
+            secanteFields.style.display = 'none';
+            newtonFields.style.display = 'none';
+            bisectionFields.style.display = 'none';
+            fixedPointFields.style.display = 'none';
+            gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
+            eulerFields.style.display = 'none';
+            newPort = 5007;
             break;
+         case 'trapecio':
+            trapecioFields.style.display = 'block';
+            jacobiFields.style.display = 'none';
+            secanteFields.style.display = 'none';
+            newtonFields.style.display = 'none';
+            bisectionFields.style.display = 'none';
+            fixedPointFields.style.display = 'none';
+            gaussFields.style.display = 'none';
+            simpsonFields.style.display = 'none';
+            eulerFields.style.display = 'none';
+            newPort = 5007;
+            break;
+        case 'simpson':
+            simpsonFields.style.display = 'block';
+            trapecioFields.style.display = 'none';
+            jacobiFields.style.display = 'none';
+            secanteFields.style.display = 'none';
+            newtonFields.style.display = 'none';
+            bisectionFields.style.display = 'none';
+            fixedPointFields.style.display = 'none';
+            gaussFields.style.display = 'none';
+            eulerFields.style.display = 'none';
+            newPort = 5008;
+            break;   
+        case 'euler':
+            simpsonFields.style.display = 'none';
+            trapecioFields.style.display = 'none';
+            jacobiFields.style.display = 'none';
+            secanteFields.style.display = 'none';
+            newtonFields.style.display = 'none';
+            bisectionFields.style.display = 'none';
+            fixedPointFields.style.display = 'none';
+            gaussFields.style.display = 'none';
+            eulerFields.style.display = 'block';
+            newPort = 5009;
+            break;                 
         default:
             break;
     }
@@ -234,8 +315,46 @@ document.getElementById('sendData').addEventListener('click', function(event) {
     }
 
 
+    // Incluye a, b, número de trapecios si el método es 'trapecio'
+    if (selectedMethod === 'trapecio') {
+        apiUrl = '/api/trapecio';
+        const a = document.getElementById('a_trap').value;
+        const b = document.getElementById('b_trap').value;
+        const num = document.getElementById('num_trap').value;
+
+        dataToSend.a_trap = parseFloat(a);
+        dataToSend.b_trap = parseFloat(b);
+        dataToSend.num_trap = parseInt(num);
+    }
+
+    if (selectedMethod === 'simpson') {
+        apiUrl = '/api/simpson';
+        const a = document.getElementById('a_simp').value;
+        const b = document.getElementById('b_simp').value;
+        const num = document.getElementById('num_simp').value;
+
+        dataToSend.a_simp = parseFloat(a);
+        dataToSend.b_simp = parseFloat(b);
+        dataToSend.num_simp = parseInt(num);
+    }
+
+    if (selectedMethod === 'euler') {
+    apiUrl = '/api/euler';
+    const x0 = document.getElementById('x0_euler').value;
+    const y0 = document.getElementById('y0_euler').value;
+    const h = document.getElementById('h_euler').value;
+    const n = document.getElementById('n_euler').value;
+
+    dataToSend.x0 = parseFloat(x0);
+    dataToSend.y0 = parseFloat(y0);
+    dataToSend.h = parseFloat(h);
+    dataToSend.n = parseInt(n);
+}
+
+
+
     // Enviar datos al servidor usando Fetch API
-    fetch(apiUrl, {
+     fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -248,17 +367,41 @@ document.getElementById('sendData').addEventListener('click', function(event) {
 
         if (data.alert_error) {
             alert(data.message);
-            return; 
+            return;
         }
 
-        if(! method_no_graphic){
-            // Mostrar la gráfica utilizando Plotly
+        if (!method_no_graphic) {
+            if (selectedMethod === 'euler') {
+                const eulerDisplay = document.getElementById('eulerDisplay');
 
-            const graphDiv = document.getElementById('graphDiv');
-            const graphData = JSON.parse(data.graph_data);
-            Plotly.newPlot(graphDiv, graphData.data, graphData.layout);
-        }else{
-            
+                if (data.resultado) {
+                    eulerDisplay.innerText = JSON.stringify(data.resultado, null, 2);
+
+                    const x_vals = data.resultado.map(p => p[0]);
+                    const y_vals = data.resultado.map(p => p[1]);
+
+                    const graphDiv = document.getElementById('graphDiv');
+                    Plotly.newPlot(graphDiv, [{
+                        x: x_vals,
+                        y: y_vals,
+                        mode: 'lines+markers',
+                        name: 'Euler'
+                    }], {
+                        title: 'Aproximación con Método de Euler',
+                        xaxis: { title: 'x' },
+                        yaxis: { title: 'y' }
+                    });
+                } else if (data.error) {
+                    eulerDisplay.innerText = `Error: ${data.error}`;
+                }
+            } else {
+                // Otros métodos con gráfica
+                const graphDiv = document.getElementById('graphDiv');
+                const graphData = JSON.parse(data.graph_data);
+                Plotly.newPlot(graphDiv, graphData.data, graphData.layout);
+            }
+        } else {
+            // Métodos sin gráfica
             if (selectedMethod === 'jacobi') {
                 const jacobiDisplay = document.getElementById('jacobiDisplay');
                 jacobiDisplay.innerText = `Solución Jacobi: ${data.solution}`;
@@ -267,15 +410,18 @@ document.getElementById('sendData').addEventListener('click', function(event) {
                 const gaussDisplay = document.getElementById('gaussDisplay');
                 gaussDisplay.innerText = `Solución Gauss: ${data.solution}`;
             }
+            if (selectedMethod === 'euler') {
+                const eulerDisplay = document.getElementById('eulerDisplay');
+                eulerDisplay.innerText = `Solución Euler: ${data.solution}`;
+            }
         }
-        
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 });
 
-// Función del método de punto fijo para cambiar el campo de ingreso por el cuadro de la transformada
+// Botones adicionales
 document.getElementById('acceptFunction').addEventListener('click', function() {
     switchDisplayTransf = true;
 });
@@ -283,6 +429,3 @@ document.getElementById('acceptFunction').addEventListener('click', function() {
 document.getElementById('refreshButton').addEventListener('click', function() {
     location.reload(); // Recarga la página
 });
-
-// Inicializar el comportamiento de los campos
-//toggleFields();

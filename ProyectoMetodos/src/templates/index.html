@@ -67,8 +67,11 @@
                         <option value="puntoFijo">Punto Fijo</option>
                         <option value="newton">Newton Raphson</option>
                         <option value="secante">Secante</option>
+                        <option value="euler">Euler</option>
                         <option value="jacobi">Jacobi</option>
+                        <option value="trapecio">Trapecio</option>
                         <option value="gauss">Gauss-Seidel</option>
+                        <option value="simpson">Regla de simpson</option>
                     </select>
                 </div>
             </div>
@@ -157,14 +160,66 @@
 
 
         <div id="gaussFields" class="gauss-container form-group">
-            <label for="nVar_gau">Número de variables:</label>
-            <input type="number" class="form-control" id="nVar_gau" name="nVar_gau" min="0" onkeydown="return false" required>
+        <label for="nVar_gau">Número de variables:</label>
+        <input type="number" class="form-control" id="nVar_gau" name="nVar_gau" min="1" value="4" required>
+
+        <br>
+        <label>Ingrese la matriz:</label>
+        <table id="matriz_gau_table" class="table"></table>
+
+        <br>
+        <button onclick="readMatrix()">Calcular</button>
+
+        <br>
+        <label for="gaussDisplay">Solución:</label>
+        <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
+        </div>
+
+         <div id="trapecioFields" class="trapecio-container form-group">
+            <label for="a_trap">Valor de a:</label>
+            <input type="number" class="form-control" id="a_trap" name="a_trap" step="any" required>
             <br>
-            <label for="matriz_gau">Ingrese la matriz:</label>
-            <textarea class="form-control" id="matriz_gau" rows="4" required></textarea>
+            <label for="b_trap">Valor de b:</label>
+            <input type="number" class="form-control" id="b_trap" name="b_trap" step="any" required>
             <br>
-            <label for="gaussDisplay">Solución:</label>
-            <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
+            <label for="num_trap">Número de trapecios:</label>
+            <input type="number" class="form-control" id="num_trap" name="num_trap" min="0" step="any" required>
+            <br>
+        </div>
+
+
+        <div id="simpsonFields" class="simpson-container form-group">
+            <label for="a_simp">Valor de a:</label>
+            <input type="number" class="form-control" id="a_simp" name="a_simp" step="any" required>
+            <br>
+            <label for="b_simp">Valor de b:</label>
+            <input type="number" class="form-control" id="b_simp" name="b_simp" step="any" required>
+            <br>
+            <label for="num_simp">Número de trapecios:</label>
+            <input type="number" class="form-control" id="num_simp" name="num_simp" min="0" step="any" required>
+            <br>
+        </div>
+
+        <div id="eulerFields" class="method-fields" style="display:none">
+          <label>f(x, y):</label>
+          <input type="text" id="funcion_euler" placeholder="Ej: x + y">
+
+          <label>x₀:</label>
+          <input type="number" id="x0">
+
+          <label>y₀:</label>
+          <input type="number" id="y0">
+
+          <label>h (paso):</label>
+          <input type="number" id="h" step="0.01">
+
+          <label>n (iteraciones):</label>
+          <input type="number" id="n" value="10">
+
+          <label>Resultado:</label>
+          <textarea id="eulerDisplay" rows="6" cols="50" readonly></textarea>
+                    <pre id="eulerDisplay" style="background: #f0f0f0; padding: 1em;"></pre>
+
         </div>
 
 
@@ -182,7 +237,7 @@
 <!-- Gráfica centrada -->
 <div id="graphContainer" class="mt-5 text-center">
     <h3>Resultado</h3>
-    <div id="graphDiv" style="width:100%;height:100%;"></div>
+    <!-- Aquí se insertarán dinámicamente varias gráficas -->
 </div>
 
 
