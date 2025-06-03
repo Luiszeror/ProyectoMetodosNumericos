@@ -378,7 +378,63 @@ document.getElementById('sendData').addEventListener('click', function(event) {
                 const eulerDisplay = document.getElementById('eulerDisplay');
 
                 if (data.resultado) {
-                    eulerDisplay.innerText = JSON.stringify(data.resultado, null, 2);
+                    let htmlContent = `
+                        <div class="euler-results">
+                            <h4>Resultados del Método de Euler</h4>
+                            <div class="params">
+                                <p><strong>Parámetros:</strong> 
+                                x₀ = ${data.resultado.x[0]}, y₀ = ${data.resultado.y[0]}, 
+                                h = ${data.resultado.h}, iteraciones = ${data.resultado.n}</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Iteración</th>
+                                            <th>x</th>
+                                            <th>y (Euler)</th>
+                                            ${data.resultado.y_real ? '<th>y (Exacto)</th><th>Error</th>' : ''}
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+                        
+                        // Llenar la tabla con los datos
+                        for (let i = 0; i <= data.resultado.n; i++) {
+                            htmlContent += `
+                                <tr>
+                                    <td>${i}</td>
+                                    <td>${data.resultado.x[i].toFixed(6)}</td>
+                                    <td>${data.resultado.y[i].toFixed(6)}</td>`;
+                            
+                            if (data.resultado.y_real) {
+                                const error = data.resultado.y_real[i] !== undefined ? 
+                                    Math.abs(data.resultado.y[i] - data.resultado.y_real[i]).toFixed(6) : 'N/A';
+                                
+                                htmlContent += `
+                                    <td>${data.resultado.y_real[i] ? data.resultado.y_real[i].toFixed(6) : 'N/A'}</td>
+                                    <td>${error}</td>`;
+                            }
+                            
+                            htmlContent += `</tr>`;
+                        }
+                        
+                        htmlContent += `
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="summary">
+                                <p><strong>Resumen:</strong></p>
+                                <ul>
+                                    <li>Valor final aproximado: ${data.resultado.y[data.resultado.n].toFixed(6)}</li>
+                                    ${data.resultado.y_real ? 
+                                    `<li>Valor final exacto: ${data.resultado.y_real[data.resultado.n].toFixed(6)}</li>
+                                    <li>Error final: ${Math.abs(data.resultado.y[data.resultado.n] - data.resultado.y_real[data.resultado.n]).toFixed(6)}</li>` : ''}
+                                </ul>
+                            </div>
+                        </div>`;
+                        
+                        // Reemplaza la asignación al textarea por:
+                        document.getElementById('eulerResultsContainer').innerHTML = htmlContent;
 
                     const x_vals = data.resultado.x;
                     const y_vals = data.resultado.y;
