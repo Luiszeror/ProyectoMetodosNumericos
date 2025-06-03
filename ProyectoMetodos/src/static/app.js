@@ -339,19 +339,19 @@ document.getElementById('sendData').addEventListener('click', function(event) {
     }
 
     if (selectedMethod === 'euler') {
-    apiUrl = '/api/euler';
-    const x0 = document.getElementById('x0').value;
-    const y0 = document.getElementById('y0').value;
-    const h = document.getElementById('h').value;
-    const n = document.getElementById('n').value;
-    const expresion = document.getElementById('expression_euler').value;
+        apiUrl = '/api/euler';
+        const x0 = document.getElementById('x0').value;
+        const y0 = document.getElementById('y0').value;
+        const h = document.getElementById('h').value;
+        const n = document.getElementById('n').value;
+        const expresion = document.getElementById('expression_euler').value;
 
-    dataToSend.x0 = parseFloat(x0);
-    dataToSend.y0 = parseFloat(y0);
-    dataToSend.h = parseFloat(h);
-    dataToSend.n = parseInt(n);
-    dataToSend.expresion = expresion;
-}
+        dataToSend.x0 = parseFloat(x0);
+        dataToSend.y0 = parseFloat(y0);
+        dataToSend.h = parseFloat(h);
+        dataToSend.n = parseInt(n);
+        dataToSend.expresion = expresion;
+    }
 
 
 
@@ -382,19 +382,47 @@ document.getElementById('sendData').addEventListener('click', function(event) {
 
                     const x_vals = data.resultado.x;
                     const y_vals = data.resultado.y;
+                    const y_real_vals = data.resultado.y_real
 
-
-                    const graphDiv = document.getElementById('graphDiv');
-                    Plotly.newPlot(graphDiv, [{
+                    // Configurar las trazas del gráfico
+                    const traces = [{
                         x: x_vals,
                         y: y_vals,
                         mode: 'lines+markers',
-                        name: 'Euler'
-                    }], {
-                        title: 'Aproximación con Método de Euler',
+                        name: 'Aproximación Euler',
+                        line: {color: '#1f77b4'} // Azul estándar de Plotly
+                    }];
+
+                    // Añadir solución exacta si existe y tiene valores
+                    const hasRealSolution = y_real_vals.length > 0 && y_real_vals.some(y => y !== null);
+                    if (hasRealSolution) {
+                        traces.push({
+                            x: x_vals,
+                            y: y_real_vals,
+                            mode: 'lines',
+                            name: 'Solución Exacta',
+                            line: {
+                                color: '#ff7f0e', // Naranja estándar de Plotly
+                                dash: 'dash'
+                            }
+                        });
+                    }
+
+                    // Configuración del layout
+                    const layout = {
+                        title: hasRealSolution 
+                            ? 'Método de Euler vs Solución Exacta' 
+                            : 'Aproximación con Método de Euler',
                         xaxis: { title: 'x' },
-                        yaxis: { title: 'y' }
-                    });
+                        yaxis: { title: 'y' },
+                        margin: {t: 40, b: 40, l: 50, r: 20},
+                        hovermode: 'closest',
+                        showlegend: true
+                    };
+
+                    // Dibujar el gráfico
+                    const graphDiv = document.getElementById('graphDiv');
+                    Plotly.newPlot(graphDiv, traces, layout);
                 } else if (data.error) {
                     eulerDisplay.innerText = `Error: ${data.error}`;
                 }
