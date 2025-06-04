@@ -6,44 +6,11 @@
     <title>Calculadora de Métodos Numéricos</title>
 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Estilo personalizado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-
-    <style>
-        body {
-            margin-top: 50px;
-        }
-        table {
-            margin: 0 auto;
-        }
-        td {
-            padding: 20px;
-            cursor: pointer;
-            font-size: 20px;
-            text-align: center;
-            border: 1px solid black;
-        }
-        #display {
-            font-size: 20px;
-            text-align: right;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .input-container {
-            margin-bottom: 20px;
-        }
-        .bisection-container,
-        .point-container,
-        .newton-container,
-        .secante-container {
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
 
@@ -122,6 +89,10 @@
             <br>
             <label for="xu">Valor de xu:</label>
             <input type="number" class="form-control" id="xu" name="xu" step="any" required>
+            <div class="text-center mt-4">
+                <button id="sendBiseccion" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
         <div id="fixedPointFields" class="point-container form-group">
@@ -132,11 +103,19 @@
             <br>
             <label for="xo">Valor del punto inicial (xo):</label>
             <input type="number" class="form-control" id="xo" name="xo" step="any" required>
+            <div class="text-center mt-4">
+                <button id="sendpuntoFijo" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
         <div id="newtonFields" class="newton-container form-group">
             <label for="xo_newton">Valor del punto inicial (xo):</label>
             <input type="number" class="form-control" id="xo_newton" name="xo" step="any" required>
+            <div class="text-center mt-4">
+                <button id="sendNewton" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
         <div id="secanteFields" class="secante-container form-group">
@@ -145,34 +124,60 @@
             <br>
             <label for="x1_sec">Valor de x1:</label>
             <input type="number" class="form-control" id="x1_sec" name="x1_sec" step="any" required>
+            <div class="text-center mt-4">
+                <button id="sendSecante" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
         <div id="jacobiFields" class="jacobi-container form-group">
             <label for="nVar_jac">Número de variables:</label>
-            <input type="number" class="form-control" id="nVar_jac" name="nVar_jac" min="0" onkeydown="return false" required>
+            <input type="number" class="form-control" id="nVar_jac" name="nVar_jac" min="1" value="3" required>
+
             <br>
-            <label for="matriz_jac">Ingrese la matriz:</label>
-            <textarea class="form-control" id="matriz_jac" rows="4" required></textarea>
-            <br>
+            <label>Ingrese la matriz aumentada (coeficientes y términos independientes):</label>
+            <div class="table-responsive">
+                <table id="matriz_jac_table" class="table table-bordered">
+                    <thead>
+                        <tr id="matrix_header_jac"></tr>
+                    </thead>
+                    <tbody id="matrix_body_jac"></tbody>
+                </table>
+            </div>
+
+            <br><br>
             <label for="jacobiDisplay">Solución:</label>
             <textarea class="form-control" id="jacobiDisplay" rows="4" readonly></textarea>
+            <div class="text-center mt-4">
+                <button id="sendJacobi" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
+
         </div>
 
 
         <div id="gaussFields" class="gauss-container form-group">
-        <label for="nVar_gau">Número de variables:</label>
-        <input type="number" class="form-control" id="nVar_gau" name="nVar_gau" min="1" value="4" required>
+            <label for="nVar_gau">Número de variables:</label>
+            <input type="number" class="form-control" id="nVar_gau" name="nVar_gau" min="1" value="3" required>
 
-        <br>
-        <label>Ingrese la matriz:</label>
-        <table id="matriz_gau_table" class="table"></table>
+            <br>
+            <label>Ingrese la matriz aumentada (coeficientes y términos independientes):</label>
+            <div class="table-responsive">
+                <table id="matriz_gau_table" class="table table-bordered">
+                    <thead>
+                        <tr id="matrix_header"></tr>
+                    </thead>
+                    <tbody id="matrix_body"></tbody>
+                </table>
+            </div>
 
-        <br>
-        <button onclick="readMatrix()">Calcular</button>
-
-        <br>
-        <label for="gaussDisplay">Solución:</label>
-        <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
+            <br><br>
+            <label for="gaussDisplay">Solución:</label>
+            <textarea class="form-control" id="gaussDisplay" rows="4" readonly></textarea>
+            <div class="text-center mt-4">
+                <button id="sendGauss" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
          <div id="trapecioFields" class="trapecio-container form-group">
@@ -184,7 +189,10 @@
             <br>
             <label for="num_trap">Número de trapecios:</label>
             <input type="number" class="form-control" id="num_trap" name="num_trap" min="0" step="any" required>
-            <br>
+            <div class="text-center mt-4">
+                <button id="sendTrapecio" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
 
@@ -197,39 +205,34 @@
             <br>
             <label for="num_simp">Número de trapecios:</label>
             <input type="number" class="form-control" id="num_simp" name="num_simp" min="0" step="any" required>
-            <br>
+            <div class="text-center mt-4">
+                <button id="sendSimpson" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
 
         <div id="eulerFields" class="method-fields" style="display:none">
-          <label style="color: #fff">f(x, y):</label>
-        <input type="text" id="expression_euler" placeholder="Ingrese f(x, y)">
-          <label style="color: #fff">x₀:</label>
-          <input type="number" id="x0">
+            <label style="color: #fff">f(x, y):</label>
+            <input type="text" id="expression_euler" placeholder="Ingrese f(x, y)">
+            <label style="color: #fff">x₀:</label>
+            <input type="number" id="x0">
 
-          <label style="color: #fff">y₀:</label>
-          <input type="number" id="y0">
+            <label style="color: #fff">y₀:</label>
+            <input type="number" id="y0">
 
-          <label style="color: #fff">h (paso):</label>
-          <input type="number" id="h" step="0.01">
+            <label style="color: #fff">h (paso):</label>
+            <input type="number" id="h" step="0.01">
 
-          <label style="color: #fff">n (iteraciones):</label>
-          <input type="number" id="n" value="10">
+            <label style="color: #fff">n (iteraciones):</label>
+            <input type="number" id="n" value="10">
 
-          <label style="color: #fff">Resultado:</label>
-          <div id="eulerResultsContainer" class="euler-results-container"></div>
+            <label style="color: #fff">Resultado:</label>
+            <div id="eulerResultsContainer" class="euler-results-container"></div>
+            <div class="text-center mt-4">
+                <button id="sendEuler" class="btn btn-success mx-2">Enviar Datos</button>
+                <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
+            </div>
         </div>
-
-
-
-        <!-- fin campos -->
-
-
-
-       <!-- Botones centrados -->
-<div class="text-center mt-4">
-    <button id="sendData" class="btn btn-success mx-2">Enviar Datos</button>
-    <button id="refreshButton" class="btn btn-secondary mx-2">Actualizar Datos</button>
-</div>
 
 <!-- Gráfica centrada -->
 <div id="graphContainer" class="mt-5 text-center">
@@ -238,19 +241,24 @@
 </div>
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Bootstrap.js -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
-
-    <!-- Cargar el archivo JavaScript -->
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
-
-
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Bootstrap.js -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+<!-- Cargar el archivo JavaScript -->
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script src="{{ url_for('static', filename='puntoFijo.js') }}"></script>
+<script src="{{ url_for('static', filename='biseccion.js') }}"></script>
+<script src="{{ url_for('static', filename='newton.js') }}"></script>
+<script src="{{ url_for('static', filename='secante.js') }}"></script>
+<script src="{{ url_for('static', filename='jacobi.js') }}"></script>
+<script src="{{ url_for('static', filename='gauss.js') }}"></script>
+<script src="{{ url_for('static', filename='trapecio.js') }}"></script>
+<script src="{{ url_for('static', filename='simpson.js') }}"></script>
+<script src="{{ url_for('static', filename='euler.js') }}"></script>
 
 </body>
 

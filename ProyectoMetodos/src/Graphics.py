@@ -218,7 +218,7 @@ class Graphics:
     def graph_secante(self, approximations):
         print(f"approximations: {approximations}")
 
-        x_values = np.linspace(-150, 150, 1500)
+        x_values = np.linspace(0.01, 150, 1500)  # Empieza desde 0.01 para evitar división por cero y sqrt negativo
         y_values = self.f(x_values)
 
         # Estructura de datos para Plotly

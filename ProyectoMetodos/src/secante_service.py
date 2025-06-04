@@ -34,7 +34,7 @@ def secante():
         return jsonify({"message": "Error al generar la gráfica", "error": str(e)})
 
     return jsonify({
-        "message": "Datos de Punto Fijo procesados correctamente",
+        "message": "Datos de Secante procesados correctamente",
         "result": result,
         "graph_data" : graph_data
     })

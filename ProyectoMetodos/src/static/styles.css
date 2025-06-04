@@ -45,6 +45,32 @@ textarea:focus {
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
+table {
+    margin: 0 auto;
+}
+td {
+    padding: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid black;
+}
+#display {
+    font-size: 20px;
+    text-align: right;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.input-container {
+    margin-bottom: 20px;
+}
+.bisection-container,
+.point-container,
+.newton-container,
+.secante-container {
+    margin-top: 20px;
+}
+
 .table td {
     padding: 15px;
     cursor: pointer;
