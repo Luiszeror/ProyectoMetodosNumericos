@@ -112,6 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // Mostrar/Ocultar campos específicos según el método y definir el puerto
 function toggleFields() {
     const method = document.getElementById('method').value;
+    const funcionInput = document.getElementById('funcionInput');
     const bisectionFields = document.getElementById('bisectionFields');
     const fixedPointFields = document.getElementById('fixedPointFields');
     const newtonFields = document.getElementById('newtonFields');
@@ -130,6 +131,7 @@ function toggleFields() {
     switch (method) {
         case 'biseccion':
             bisectionFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             fixedPointFields.style.display = 'none';
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
@@ -142,6 +144,7 @@ function toggleFields() {
             break;
         case 'puntoFijo':
             fixedPointFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             bisectionFields.style.display = 'none';
             newtonFields.style.display = 'none';
             secanteFields.style.display = 'none';
@@ -154,6 +157,7 @@ function toggleFields() {
             break;
         case 'newton':
             newtonFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
             secanteFields.style.display = 'none';
@@ -166,6 +170,7 @@ function toggleFields() {
             break;
         case 'secante':
             secanteFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
@@ -178,6 +183,7 @@ function toggleFields() {
             break;
         case 'jacobi':
             jacobiFields.style.display = 'block';
+            funcionInput.style.display = 'none';
             secanteFields.style.display = 'none';
             newtonFields.style.display = 'none';
             bisectionFields.style.display = 'none';
@@ -190,6 +196,7 @@ function toggleFields() {
             break;
         case 'gauss':
             gaussFields.style.display = 'block';
+            funcionInput.style.display = 'none';
             jacobiFields.style.display = 'none';
             secanteFields.style.display = 'none';
             newtonFields.style.display = 'none';
@@ -202,6 +209,7 @@ function toggleFields() {
             break;  
          case 'trapecio':
             trapecioFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             jacobiFields.style.display = 'none';
             secanteFields.style.display = 'none';
             newtonFields.style.display = 'none';
@@ -214,6 +222,7 @@ function toggleFields() {
             break;
         case 'simpson':
             simpsonFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             trapecioFields.style.display = 'none';
             jacobiFields.style.display = 'none';
             secanteFields.style.display = 'none';
@@ -225,6 +234,8 @@ function toggleFields() {
             newPort = 5008;
             break;   
         case 'euler':
+            eulerFields.style.display = 'block';
+            funcionInput.style.display = 'block';
             simpsonFields.style.display = 'none';
             trapecioFields.style.display = 'none';
             jacobiFields.style.display = 'none';
@@ -233,7 +244,6 @@ function toggleFields() {
             bisectionFields.style.display = 'none';
             fixedPointFields.style.display = 'none';
             gaussFields.style.display = 'none';
-            eulerFields.style.display = 'block';
             newPort = 5009;
             break;                 
         default:

@@ -17,7 +17,7 @@ document.getElementById('sendEuler').addEventListener('click', function(event) {
         const y0 = document.getElementById('y0').value;
         const h = document.getElementById('h').value;
         const n = document.getElementById('n').value;
-        const expresion = document.getElementById('expression_euler').value;
+        const expresion = document.getElementById('display').value;
 
         dataToSend.x0 = parseFloat(x0);
         dataToSend.y0 = parseFloat(y0);
