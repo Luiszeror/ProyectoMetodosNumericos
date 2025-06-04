@@ -106,7 +106,14 @@ document.getElementById('sendGauss').addEventListener('click', function(event) {
         if (!method_no_graphic) {} else {
             if (selectedMethod === 'gauss') {
                 const gaussDisplay = document.getElementById('gaussDisplay');
-                gaussDisplay.innerText = `Solución Gauss: ${data.solution}`;
+                const solutionArray = data.solution.split(',').map(s => s.trim());
+
+                let formattedSolution = 'Solución Gauss:\n';
+                solutionArray.forEach((val, i) => {
+                    formattedSolution += `x${i + 1} = ${val}\n`;
+                });
+
+                gaussDisplay.value = formattedSolution;
             }
         }
     })

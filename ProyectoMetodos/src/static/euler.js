@@ -157,7 +157,7 @@ document.getElementById('sendEuler').addEventListener('click', function(event) {
                 const graphData = JSON.parse(data.graph_data);
                 Plotly.newPlot(graphDiv, graphData.data, graphData.layout);
             }
-        } else {}
+        }
     })
     .catch((error) => {
         console.error('Error:', error);

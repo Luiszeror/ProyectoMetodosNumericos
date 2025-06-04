@@ -106,7 +106,14 @@ document.getElementById('sendJacobi').addEventListener('click', function(event) 
             // Métodos sin gráfica
         if (selectedMethod === 'jacobi') {
             const jacobiDisplay = document.getElementById('jacobiDisplay');
-            jacobiDisplay.innerText = `Solución Jacobi: ${data.solution}`;
+            const solutionArray = data.solution.split(',').map(s => s.trim());
+
+            let formattedSolution = 'Solución Jacobi:\n';
+            solutionArray.forEach((val, i) => {
+                formattedSolution += `x${i + 1} = ${val}\n`;
+            });
+
+            jacobiDisplay.value = formattedSolution;
         }
     })
     .catch((error) => {
