@@ -16,13 +16,20 @@
 
     <div class="container">
         <h1 class="text-center" style="color: #fff">Calculadora de Métodos Numéricos</h1>
-
+        <script type="module">
+            import 'https://unpkg.com/mathlive?module';
+        </script>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="display" style="color: #fff">f(x):</label>
-                    <input type="text" class="form-control" id="display">
+                    <math-field
+                    id="displayMath"
+                    virtual-keyboard-mode="onfocus"
+                    style="width: 100%; min-height: 50px; font-size: 1.5em;"
+                    ></math-field>
+                    <input type="hidden" id="display">
                 </div>
             </div>
             <div class="col-md-6">
@@ -43,45 +50,6 @@
                 </div>
             </div>
         </div>
-
-
-        <table class="table table-bordered">
-            <tr>
-                <td onclick="addToDisplay('sin')">sin</td>
-                <td onclick="addToDisplay('1')">1</td>
-                <td onclick="addToDisplay('2')">2</td>
-                <td onclick="addToDisplay('3')">3</td>
-                <td onclick="addToDisplay('/')">/</td>
-                <td onclick="addToDisplay('(')">(</td>
-                <td onclick="clearDisplay()" style="background-color: #eb7906">C</td>
-            </tr>
-            <tr>
-                <td onclick="addToDisplay('cos')">cos</td>
-                <td onclick="addToDisplay('4')">4</td>
-                <td onclick="addToDisplay('5')">5</td>
-                <td onclick="addToDisplay('6')">6</td>
-                <td onclick="addToDisplay('*')">*</td>
-                <td onclick="addToDisplay(')')">)</td>
-                <td onclick="deleteLastChar()" style="background-color: #eb7906">⌫</td>
-            </tr>
-            <tr>
-                <td onclick="addToDisplay('tan')">tan</td>
-                <td onclick="addToDisplay('7')">7</td>
-                <td onclick="addToDisplay('8')">8</td>
-                <td onclick="addToDisplay('9')">9</td>
-                <td onclick="addToDisplay('-')">-</td>
-                <td onclick="addToDisplay('**')">^</td>
-                <td rowspan="2" onclick="addToDisplay('+')">+</td>
-            </tr>
-            <tr>
-                <td onclick="addToDisplay('E')">e</td>
-                <td colspan="2" onclick="addToDisplay('0')">0</td>
-                <td onclick="addToDisplay('.')">.</td>
-                <td onclick="addToDisplay('x')">x</td>
-                <td onclick="addToDisplay('sqrt')">√</td>
-            </tr>
-        </table>
-
         <!-- Campos especificos segun el métodos seleccionado-->
         <div id="bisectionFields" class="bisection-container form-group">
             <label for="xi">Valor de xi:</label>
@@ -96,10 +64,13 @@
         </div>
 
         <div id="fixedPointFields" class="point-container form-group">
-            <button id="acceptFunction" class="btn btn-primary">Aceptar función</button>
-            <br><br>
             <label for="transformada">Transformada de la función:</label>
-            <input type="text" class="form-control" id="transformada" name="transformada" readonly required>
+            <math-field
+            id="transformadaMath"
+            virtual-keyboard-mode="onfocus"
+            style="width: 100%; min-height: 50px; font-size: 1.5em;"
+            ></math-field>
+            <input type="hidden" id="transformada">
             <br>
             <label for="xo">Valor del punto inicial (xo):</label>
             <input type="number" class="form-control" id="xo" name="xo" step="any" required>

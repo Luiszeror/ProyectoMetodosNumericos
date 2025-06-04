@@ -1,36 +1,4 @@
-
-let switchDisplayTransf = false;
-
-//Variable usada para los metodos que no deben graficarse no generen problemas
 let method_no_graphic = false; 
-
-
-function addToDisplay(value) {
-    if (switchDisplayTransf) {
-        document.getElementById('transformada').value += value;
-    } else {
-        document.getElementById('display').value += value;
-    }
-}
-
-function clearDisplay() {
-    if (switchDisplayTransf) {
-        document.getElementById('transformada').value = '';
-    } else {  
-        document.getElementById('display').value = '';
-    }
-}
-
-function deleteLastChar() {
-    if (switchDisplayTransf) {
-        let currentVal = document.getElementById('transformada').value;
-        document.getElementById('transformada').value = currentVal.slice(0, -1);
-    } else {
-        let currentVal = document.getElementById('display').value;
-        document.getElementById('display').value = currentVal.slice(0, -1); 
-    }
-}
-
 // funcion encargada de actualizar el elemento por defecto de lista desplegable 
 // segun el metodo seleccionado
 
@@ -83,7 +51,63 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+window.latexToSymPy = function (latex) {
+    return latex
+        .replace(/\\cdot/g, '*')
+        .replace(/\^/g, '**')
+        .replace(/\\sqrt{([^}]*)}/g, 'sqrt($1)')
+        .replace(/\\sqrt\s*([0-9a-zA-Z\.]+)/g, 'sqrt($1)')
+        .replace(/\\frac\s*([0-9a-zA-Z]+)\s*([0-9a-zA-Z]+)/g, '($1/$2)')
+        .replace(/\\frac{([^}]*)}{([^}]*)}/g, '($1/$2)')
+        .replace(/\\sin/g, 'sin')
+        .replace(/\\cos/g, 'cos')
+        .replace(/\\tan/g, 'tan')
+        .replace(/\\log/g, 'log')
+        .replace(/\\ln/g, 'log')
+        .replace(/\\exp/g, 'exp')
+        .replace(/\\pi/g, 'pi')
+        .replace(/\\e/g, 'E')
+        .replace(/\\left\(/g, '(')
+        .replace(/\\right\)/g, ')');
+};
 
+window.addEventListener('DOMContentLoaded', () => {
+    const mathField = document.getElementById('displayMath');
+    
+    const hiddenInput = document.getElementById('display');
+
+    if (mathField && hiddenInput) {
+        mathField.addEventListener('input', (e) => {
+            const latex = e.target.value;
+            const converted = window.latexToSymPy(latex);
+            hiddenInput.value = converted;
+
+            console.log("LaTeX:", latex);
+            console.log("Convertido para SymPy:", converted);
+        });
+    } else {
+        console.warn("No se encontró el campo displayMath o display");
+    }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    const mathField = document.getElementById('transformadaMath');
+
+    const hiddenInput = document.getElementById('transformada');
+
+    if (mathField && hiddenInput) {
+        mathField.addEventListener('input', (e) => {
+            const latex = e.target.value;
+            const converted = window.latexToSymPy(latex);
+            hiddenInput.value = converted;
+
+            console.log("LaTeX:", latex);
+            console.log("Convertido para SymPy:", converted);
+        });
+    } else {
+        console.warn("No se encontró el campo transformadaMath o transformada");
+    }
+});
 
 // Mostrar/Ocultar campos específicos según el método y definir el puerto
 function toggleFields() {
@@ -99,12 +123,7 @@ function toggleFields() {
     const simpsonFields = document.getElementById('simpsonFields');
     const eulerFields = document.getElementById('eulerFields');
 
-
-
-    //inicialización variables booleanas
-    switchDisplayTransf = false;
     method_no_graphic = false; 
-    //
 
     let newPort;  // Definir puerto específico según el método seleccionado
 

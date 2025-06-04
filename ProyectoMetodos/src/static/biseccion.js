@@ -3,6 +3,8 @@ document.getElementById('sendBiseccion').addEventListener('click', function(even
     const functionInput = document.getElementById('display').value;
     const selectedMethod = document.getElementById('method').value;
 
+    console.log('Función ingresada:', functionInput);
+
     let dataToSend = {
         function: functionInput,
         method: selectedMethod

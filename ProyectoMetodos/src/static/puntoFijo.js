@@ -1,7 +1,3 @@
-document.getElementById('acceptFunction').addEventListener('click', function() {
-    switchDisplayTransf = true;
-});
-
 document.getElementById('sendpuntoFijo').addEventListener('click', function(event) {
     event.preventDefault(); 
     const functionInput = document.getElementById('display').value;
