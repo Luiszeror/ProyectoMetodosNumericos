@@ -16,6 +16,7 @@ def newton():
     function = data['function']
     
     xo = data.get('xo_newton')
+    
     expr = parse_expr(function)
 
     result = newton_main(expr, xo)

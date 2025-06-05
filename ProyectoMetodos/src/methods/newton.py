@@ -25,10 +25,13 @@ def newton_main(F, xi):
         print("Iter",cont,":\ng(x):", gx, "\ng(x)':", dgx ,'\n')
         
         if gx == nan or dgx == nan or gx.is_infinite:
-            message = "La función evaluada tiene una singularidad en x =", xi, "no se puede continuar"
+            message = f"La función evaluada tiene una singularidad en x = {xi}, no se puede continuar."
             break        
+        elif not gx.is_real:
+            message = f"La función generó un número complejo: {gx}, no se puede continuar."
+            break
         else:
-            approximations.append(float(gx))   
+            approximations.append(float(gx))  
             
         if dgx == 0:
             message = "La derivada en el punto x =",xi ,"es cero, no se puede continuar"
