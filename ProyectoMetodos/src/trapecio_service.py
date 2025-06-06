@@ -30,6 +30,7 @@ def jacobi():
         return jsonify({"message": message, "alert_error": True})
 
     solution = result.get('solution')
+    areas_individuales = result.get('areas_individuales')
 
     plotter = Graphics(expr)
 
@@ -42,7 +43,19 @@ def jacobi():
         "message": "Datos del método Trapecio procesados correctamente",
         "result": result,
         "graph_data": graph_data,
-        "solution": solution
+        "solution": solution,
+        "areas_individuales": areas_individuales,  # Nuevo campo en la respuesta
+        "detalle_trapecios": [
+            {
+                "trapecio": i+1,
+                "intervalo": [result['ptos_x'][i], result['ptos_x'][i+1]],
+                "altura": result['ptos_x'][i+1] - result['ptos_x'][i],
+                "base_izq": result['ptos_fx'][i],
+                "base_der": result['ptos_fx'][i+1],
+                "area": areas_individuales[i]
+            }
+            for i in range(len(areas_individuales))
+        ]
     })
 
 

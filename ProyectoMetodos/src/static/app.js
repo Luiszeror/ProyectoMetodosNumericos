@@ -218,7 +218,7 @@ function toggleFields() {
             gaussFields.style.display = 'none';
             simpsonFields.style.display = 'none';
             eulerFields.style.display = 'none';
-            newPort = 5007;
+            newPort = 5050;
             break;
         case 'simpson':
             simpsonFields.style.display = 'block';

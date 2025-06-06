@@ -16,6 +16,7 @@ def trapecio_main(expr, a, b, n):
 
     xs = [a]
     fxs = [float(f(a))]
+    areas_individuales = []
 
     x0 = a
     for i in range(1, n):
@@ -23,10 +24,17 @@ def trapecio_main(expr, a, b, n):
         xs.append(xi)
         fxs.append(float(f(xi)))
         suma += f(xi)
+
+        area_trapecio = h * (f(x0) + f(xi)) / 2
+        areas_individuales.append(float(area_trapecio))
+
         x0 = xi
 
     xs.append(b)
     fxs.append(float(f(b)))
+
+    area_ultimo = h * (f(x0) + f(b)) / 2
+    areas_individuales.append(float(area_ultimo))
 
     solution = abs(float(h * suma))
     # control overFlow
@@ -37,6 +45,7 @@ def trapecio_main(expr, a, b, n):
     return {
         "ptos_x": xs,
         "ptos_fx": fxs,
+        "areas_individuales": areas_individuales,  # Nuevo campo
         "solution": solution,
         "divergence": divergence,
         "message": message,
